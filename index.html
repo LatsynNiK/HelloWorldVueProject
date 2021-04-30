@@ -22,7 +22,7 @@
             <a :href="link">{{linkText}}</a>
             <br>
             <span>Details:</span>
-            <ul >
+            <ul>
               <li v-for="detail in details">{{detail}}</li>
             </ul>
 
@@ -32,8 +32,14 @@
             </ul>
 
             <span>Variants:</span>
-            <div v-for="v in variants" :key="v.id">
+            <div v-for="v in variants" :key="v.id" v-on:mouseover="updateImage(v)">
               <p>{{v.color}}</p>
+            </div>
+
+            <div style="display:flex">
+              <div class="cart">Cart ({{cart}})</div>
+              <button v-on:click="addToCart">Add to cart</button>
+              <button v-on:click="decrFromCart">Remove from cart</button>
             </div>
         </div>
       </div>

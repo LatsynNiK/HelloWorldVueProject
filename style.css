@@ -45,9 +45,14 @@ body {
     border: 1px solid #d8d8d8;
     padding: 5px 20px;
   }
+
+  .cart-tool{
+    display: flex;
+    align-items: center;
+  }
   
   button {
-    margin-top: 30px;
+    /*margin-top: 30px;*/
     border: none;
     background-color: #1E95EA;
     color: white;
