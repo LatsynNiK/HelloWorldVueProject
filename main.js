@@ -8,6 +8,7 @@ app  = new Vue({
         altText: 'image of socks',
         linkText: 'More products',
         inventory: 100,
+        inStock: true,
         onSale: true,
         details: [
                 "1 detail",
