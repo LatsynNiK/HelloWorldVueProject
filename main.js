@@ -8,6 +8,24 @@ app  = new Vue({
             altText: 'image of socks',
             linkText: 'More products',
             inventory: 100,
-            onSale: true
+            onSale: true,
+            details: [
+                "1 detail",
+                "second",
+                200,
+                true,
+                1.25
+            ],
+            variants: [
+                {
+                    id: 2201,
+                    color: "green"
+                },
+                {
+                    id: 2202,
+                    color: "blue"
+                }
+            ],
+            sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL']
     }
 })
