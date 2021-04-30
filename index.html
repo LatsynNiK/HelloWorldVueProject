@@ -13,12 +13,12 @@
             <img :src="image" :alt="altText">
           </div>
           <div class="product-info">
-            <h1>{{ name }}</h1>
+            <h1>{{ title }}</h1>
             <p>{{ description }}</p>
+            <p>{{ saleText }}</p>
             <p v-if="(inventory > 10) && inStock">In stock</p>
             <p v-else-if="(inventory > 0) && inStock">Almost sold out</p>
             <p v-else :style="outOfStock" >Out of stock</p>
-            <span v-show="onSale">On sale!</span>
             <a :href="link">{{linkText}}</a>
             <br>
             <span>Details:</span>
@@ -33,7 +33,7 @@
 
             <span>Variants:</span>
             <div style="display: flex;">
-              <div class="color-box" v-for="v in variants" :key="v.id" @mouseover="updateImage(v)" :style="{backgroundColor: v.color}"></div>
+              <div class="color-box" v-for="(v,i) in variants" :key="v.id" @mouseover="updateVariant(i)" :style="{backgroundColor: v.color}"></div>
             </div>
             <div class="cart-tool">
               <div class="cart">Cart ({{cart}})</div>
