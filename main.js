@@ -1,4 +1,3 @@
-// var product = 'Socks'
 app  = new Vue({
     el: '#app',
     data: { 
