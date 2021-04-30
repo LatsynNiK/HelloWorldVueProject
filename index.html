@@ -10,12 +10,16 @@
       <div id="app">
         <div class="product">
           <div class="product-image">
-            <img :src="product.image" :alt="product.altText">
+            <img :src="image" :alt="altText">
           </div>
           <div class="product-info">
-            <h1>{{ product.name }}</h1>
-            <p>{{ product.description }}</p>
-            <a :href="product.link">{{product.linkText}}</a>
+            <h1>{{ name }}</h1>
+            <p>{{ description }}</p>
+            <p v-if="inventory > 10">In stock</p>
+            <p v-else-if="inventory > 0">Almost sold out</p>
+            <p v-else>Out of stock</p>
+            <span v-show="onSale">On sale!</span>
+            <a :href="link">{{linkText}}</a>
         </div>
       </div>
     </div>
