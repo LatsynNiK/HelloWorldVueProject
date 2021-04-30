@@ -31,6 +31,9 @@ app  = new Vue({
         ],
         sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
         cart: 0,
+        outOfStock:{
+            textDecoration: "line-through"
+        }
     },
     methods:{
         addToCart(){
@@ -44,7 +47,5 @@ app  = new Vue({
         updateImage(variant){
             this.image = variant.image
         }
-
-
     }
 })
