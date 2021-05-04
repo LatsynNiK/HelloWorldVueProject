@@ -8,9 +8,10 @@
   <body>
     <div class="nav-bar"></div>
       <div id="app">
-        <product :premium="premiumData"></product>
-        <product :premium="premiumData"></product>
-        <product :premium="premiumData"></product>
+        <div class="cart">Cart ({{cart.length}})</div>
+        <product :premium="premiumData" @add-to-cart="addToCart" @remove-from-cart="decrFromCart"></product>
+        <product :premium="premiumData" @add-to-cart="addToCart" @remove-from-cart="decrFromCart"></product>
+        <product :premium="premiumData" @add-to-cart="addToCart" @remove-from-cart="decrFromCart"></product>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>

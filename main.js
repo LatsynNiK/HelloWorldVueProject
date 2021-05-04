@@ -35,9 +35,8 @@ Vue.component('product', {
             Shipping: {{shipping}}    
         </div>
         <div class="cart-tool">
-        <div class="cart">Cart ({{cart}})</div>
             <button v-on:click="addToCart" :disabled="!inStock" :class="{disabledButton: !inStock}">Add to cart</button>
-            <button v-on:click="decrFromCart" :disabled="cart<=0" :class="{disabledButton: cart<=0}">Remove from cart</button>
+            <button v-on:click="decrFromCart">Remove from cart</button>
         </div>
     </div>`,
     data() {
@@ -69,27 +68,26 @@ Vue.component('product', {
                     id: 2202,
                     color: "blue",
                     image: "assets/vmSocks-blue-onWhite.jpg",
-                    inventory: 0
+                    inventory: 10
                 }
         ],
         sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-        cart: 0,
         outOfStock:{
             textDecoration: "line-through"
         }
     }},
     methods:{
-        addToCart(){
-            this.cart += 1
-        },
-
-        decrFromCart(){
-            this.cart -= 1
-        },
-
         updateVariant(variantIndex){
             this.selectedVariantIndex = variantIndex
-        }
+        },
+        addToCart() {
+            let id = this.variants[this.selectedVariantIndex].id;
+            this.$emit('add-to-cart', id)
+        },
+        decrFromCart() {
+            let id = this.variants[this.selectedVariantIndex].id;
+            this.$emit('remove-from-cart', id)
+        },
     },
     computed:{
         image(){
@@ -130,6 +128,18 @@ Vue.component('productDetails', {
 app = new Vue({
     el: '#app',
     data: {
-        premiumData: true
+        premiumData: true,
+        cart: [],
+    },
+    methods: {
+        addToCart(id){
+            this.cart.push(id)
+        },
+        decrFromCart(id) {
+            let removedIndex = this.cart.indexOf(id);
+            if (~removedIndex) {
+                this.cart.splice(removedIndex, 1)
+            }
+        },
     }
 })
