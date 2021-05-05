@@ -153,6 +153,7 @@ Vue.component('productReview', {
     },
     methods: {
         onSubmit() {
+            this.errors = []
             if (this.name && this.review)
             {
                 let submittedReview = {
@@ -198,12 +199,12 @@ Vue.component('productReview', {
                 <option>1</option>
             </select>
         </p>
-        <p>
-            Please, correct the following errors:
+        <div v-if="errors.length">
+            <p> Please, correct the following errors:</p>
             <ul>
                 <li v-for="error in errors">{{error}}</li>
             </ul>
-        </p>
+        </div>
         <p>
             <input type="submit" value="Submit review">
         </p>
