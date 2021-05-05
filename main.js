@@ -45,7 +45,7 @@ Vue.component('product', {
             <p v-if="!reviews.length > 0">There are no reviews yet</p>
             <ul v-else>
                 <li v-for="review in reviews">
-                    <p>{{review.name}} ({{review.rating}})</p>
+                    <p>{{review.name}} ({{review.rating}}){{review.recommended ? " Recommended!" : ""}}</p>
                     <p>{{review.review}}</p>
                 </li>
             </ul>
@@ -148,22 +148,25 @@ Vue.component('productReview', {
             name: null,
             review: null,
             rating: null,
+            recommended: null,
             errors:[],
         }
     },
     methods: {
         onSubmit() {
             this.errors = []
-            if (this.name && this.review)
+            if (this.name && this.review, this.recommended)
             {
                 let submittedReview = {
                     name: this.name,
                     review: this.review,
                     rating: this.rating,
+                    recommended: this.recommended == "true" ? true : false
                 }
                 this.name = null
                 this.review = null
                 this.rating = null
+                this.recommended = null
                 this.$emit('review-submitted', submittedReview)
             }
             else
@@ -175,6 +178,10 @@ Vue.component('productReview', {
                 if (!this.review)
                 {
                     this.errors.push("Review is required!")
+                }
+                if (!this.recommended)
+                {
+                    this.errors.push("Recommended or not is required!")
                 }
             }
         }
@@ -189,6 +196,17 @@ Vue.component('productReview', {
             <label for="review">Review:</label>
             <textarea id="review" v-model="review"></textarea > 
         </p>
+
+        <p>Would you recommend this product?</p>
+        <div style="display: flex">
+            <label for="yes">Yes!</label>
+            <input style="width:10%" type="radio" id="yes" name="recommended" value="true" v-model="recommended">
+        </div>
+        <div style="display: flex">
+            <label for="no">Nooo =(</label>
+            <input style="width:10%" type="radio" id="no" name="recommended" value="false" v-model="recommended">
+        </div>
+
         <p>
             <label for="rating">Rating:</label>
             <select id="rating" v-model.number="rating" required>
