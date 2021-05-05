@@ -14,31 +14,44 @@ Vue.component('product', {
         </div>
         <div class="product-info">
             <h1>{{ title }}</h1>
-        <p>{{ description }}</p>
-        <p>{{ saleText }}</p>
-        <p v-if="(inventory > 10) && inStock">In stock</p>
-        <p v-else-if="(inventory > 0) && inStock">Almost sold out</p>
-        <p v-else :style="outOfStock" >Out of stock</p>
-        <a :href="link">{{linkText}}</a>
-        <br>
-        <productDetails :details="details"></productDetails>
-        <span>Sizes:</span>
-        <ul>
-            <li v-for="size in sizes">{{ size }}</li>
-        </ul>
+            <p>{{ description }}</p>
+            <p>{{ saleText }}</p>
+            <p v-if="(inventory > 10) && inStock">In stock</p>
+            <p v-else-if="(inventory > 0) && inStock">Almost sold out</p>
+            <p v-else :style="outOfStock" >Out of stock</p>
+            <a :href="link">{{linkText}}</a>
+            <br>
+            <productDetails :details="details"></productDetails>
+            <span>Sizes:</span>
+            <ul>
+                <li v-for="size in sizes">{{ size }}</li>
+            </ul>
 
-        <span>Variants:</span>
-        <div style="display: flex;">
-            <div class="color-box" v-for="(v,i) in variants" :key="v.id" @mouseover="updateVariant(i)" :style="{backgroundColor: v.color}"></div>
-        </div>        
+            <span>Variants:</span>
+            <div style="display: flex;">
+                <div class="color-box" v-for="(v,i) in variants" :key="v.id" @mouseover="updateVariant(i)" :style="{backgroundColor: v.color}"></div>
+            </div>        
+            <div>
+                Shipping: {{shipping}}    
+            </div>
+            <div class="cart-tool">
+                <button v-on:click="addToCart" :disabled="!inStock" :class="{disabledButton: !inStock}">Add to cart</button>
+                <button v-on:click="decrFromCart">Remove from cart</button>
+            </div>
+        </div>
+        <productReview @review-submitted="addReview"></productReview>
         <div>
-            Shipping: {{shipping}}    
+            <h2>Reviews</h2>
+            <p v-if="!reviews.length > 0">There are no reviews yet</p>
+            <ul v-else>
+                <li v-for="review in reviews">
+                    <p>{{review.name}} ({{review.rating}})</p>
+                    <p>{{review.review}}</p>
+                </li>
+            </ul>
         </div>
-        <div class="cart-tool">
-            <button v-on:click="addToCart" :disabled="!inStock" :class="{disabledButton: !inStock}">Add to cart</button>
-            <button v-on:click="decrFromCart">Remove from cart</button>
-        </div>
-    </div>`,
+    </div>
+    `,
     data() {
         return {
         name:'Socks',
@@ -74,7 +87,8 @@ Vue.component('product', {
         sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
         outOfStock:{
             textDecoration: "line-through"
-        }
+            },
+        reviews: [],
     }},
     methods:{
         updateVariant(variantIndex){
@@ -88,6 +102,9 @@ Vue.component('product', {
             let id = this.variants[this.selectedVariantIndex].id;
             this.$emit('remove-from-cart', id)
         },
+        addReview(review) {
+            this.reviews.push(review)
+        }
     },
     computed:{
         image(){
@@ -123,6 +140,76 @@ Vue.component('productDetails', {
             <li v-for="detail in details">{{detail}}</li>
         </ul>
     </div>`,
+})
+
+Vue.component('productReview', {
+    data(){
+        return {
+            name: null,
+            review: null,
+            rating: null,
+            errors:[],
+        }
+    },
+    methods: {
+        onSubmit() {
+            if (this.name && this.review)
+            {
+                let submittedReview = {
+                    name: this.name,
+                    review: this.review,
+                    rating: this.rating,
+                }
+                this.name = null
+                this.review = null
+                this.rating = null
+                this.$emit('review-submitted', submittedReview)
+            }
+            else
+            {
+                if (!this.name)
+                {
+                    this.errors.push("Name is required!")
+                }
+                if (!this.review)
+                {
+                    this.errors.push("Review is required!")
+                }
+            }
+        }
+    },
+    template: `
+    <form class="review-form" @submit.prevent="onSubmit">
+        <p>
+            <label for="name">Name:</label>
+            <input id="name" v-model="name"> 
+        </p>
+        <p>
+            <label for="review">Review:</label>
+            <textarea id="review" v-model="review"></textarea > 
+        </p>
+        <p>
+            <label for="rating">Rating:</label>
+            <select id="rating" v-model.number="rating" required>
+                <option>5</option>
+                <option>4</option>
+                <option>3</option>
+                <option>2</option>
+                <option>1</option>
+            </select>
+        </p>
+        <p>
+            Please, correct the following errors:
+            <ul>
+                <li v-for="error in errors">{{error}}</li>
+            </ul>
+        </p>
+        <p>
+            <input type="submit" value="Submit review">
+        </p>
+    </form>
+    <input v-model="name">
+    `
 })
 
 app = new Vue({
