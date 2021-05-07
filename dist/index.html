@@ -9,9 +9,9 @@
     <div class="nav-bar"></div>
       <div id="app">
         <div class="cart">Cart ({{cart.length}})</div>
-        <product :premium="premiumData" @add-to-cart="addToCart" @remove-from-cart="decrFromCart"></product>
-        <product :premium="premiumData" @add-to-cart="addToCart" @remove-from-cart="decrFromCart"></product>
-        <product :premium="premiumData" @add-to-cart="addToCart" @remove-from-cart="decrFromCart"></product>
+        <product :premium="premiumData" :id="101" @add-to-cart="addToCart" @remove-from-cart="decrFromCart"></product>
+        <product :premium="premiumData" :id="102" @add-to-cart="addToCart" @remove-from-cart="decrFromCart"></product>
+        <product :premium="premiumData" :id="103" @add-to-cart="addToCart" @remove-from-cart="decrFromCart"></product>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
