@@ -36,3 +36,4 @@ Vue.component('productReviewTabs', {
     </div>
     `
 })
+})
