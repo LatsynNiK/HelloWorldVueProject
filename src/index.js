@@ -1,10 +1,12 @@
 import './style.css';
 import './product';
+import store from './store';
 
 Vue.config.devtools = true
 
 var app = new Vue({
   el: '#app',
+  store,
   data: {
     premiumData: true,
     cart: [],
