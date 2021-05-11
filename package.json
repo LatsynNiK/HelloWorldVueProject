@@ -11,7 +11,8 @@
   "devDependencies": {
     "css-loader": "^5.2.4",
     "lodash": "^4.17.21",
-    "style-loader": "^2.0.0"
+    "style-loader": "^2.0.0",
+    "vuex": "^3.6.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

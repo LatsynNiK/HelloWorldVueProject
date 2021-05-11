@@ -28,12 +28,10 @@ Vue.component('productReviewTabs', {
     {{tab}}
     </span>
     <productReviewsTab v-show="selectedTab === 'Reviews'"
-    :productId="productId"
-    :reviews="reviews"/>
+    :productId="productId"/>
     <productMakeReviewTab
     :productId="productId"
     v-show="selectedTab === 'Make a review'"/>
     </div>
     `
-})
 })

@@ -1,4 +1,7 @@
-import eventBus from './eventBus'  
+import eventBus from './eventBus'
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
 
 Vue.component('productMakeReviewTab', {
     props: {
@@ -31,7 +34,12 @@ Vue.component('productMakeReviewTab', {
                 this.review = null
                 this.rating = null
                 this.recommended = null
-                eventBus.$emit('review-submitted', this.productId, submittedReview)
+                let submitRequest = {
+                    productId: this.productId,
+                    submittedReview: submittedReview
+                }
+                this.$store.dispatch('SUBMIT_REVIEW', submitRequest)
+                eventBus.$emit('review-submitted', this.productId)
             }
             else
             {

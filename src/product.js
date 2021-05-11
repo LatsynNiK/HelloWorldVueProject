@@ -1,6 +1,5 @@
 import './productDetails'
 import './productReviewTabs'
-import eventBus from './eventBus'
 
 Vue.component('product', {
   props: {
@@ -46,7 +45,6 @@ Vue.component('product', {
   </div>
   </div>
   <productReviewTabs
-    :reviews="reviews"
     :productId="id"/>
   </div>
   `,
@@ -86,7 +84,6 @@ Vue.component('product', {
       outOfStock:{
         textDecoration: "line-through"
       },
-      reviews: [],
     }},
     methods:{
       updateVariant(variantIndex){
@@ -119,11 +116,4 @@ Vue.component('product', {
         return this.premium ? "Free" : 2.99
       }
     },
-    mounted() {
-      eventBus.$on('review-submitted', (productId, review) => {
-        if (productId == this.id) {
-          this.reviews.push(review)
-        }
-      })
-    }
   })
